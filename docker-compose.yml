@@ -1,0 +1,38 @@
+services:
+  cinema_test_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: cinema_test_nginx
+    container_name: cinema_test_api
+    ports:
+      - ${NGINX_HOST_PORT}:80
+    links:
+      - cinema_test_php
+    volumes:
+      - ./api:/var/www/cinema_test
+    depends_on:
+      - cinema_test_php
+    networks:
+      - api
+
+  cinema_test_php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: cinema_test_php
+    container_name: cinema_test_php
+    volumes:
+      - ./api:/var/www/cinema_test
+    environment:
+      DB_HOST: ${DB_EXTERNAL_HOST}
+      DB_PORT: ${DB_EXTERNAL_PORT}
+      DB_USERNAME: ${DB_EXTERNAL_USERNAME}
+      DB_DATABASE: ${DB_EXTERNAL_DATABASE}
+      DB_PASSWORD: ${DB_EXTERNAL_PASSWORD}
+    networks:
+      - api
+
+networks:
+  api:
+    driver: bridge
