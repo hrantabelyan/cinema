@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('cinema_halls', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('name');
             $table->unsignedTinyInteger('color_id');
             $table->unsignedTinyInteger('number_of_rows');
@@ -20,6 +21,8 @@ return new class extends Migration
             $table->dateTime('deleted_at')->nullable();
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
+
+            $table->foreign('color_id')->references('id')->on('colors')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

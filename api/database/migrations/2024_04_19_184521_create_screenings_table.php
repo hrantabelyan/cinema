@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('screenings', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->unsignedBigInteger('cinema_hall_id');
             $table->unsignedBigInteger('movie_id');
             $table->dateTime('start_at');

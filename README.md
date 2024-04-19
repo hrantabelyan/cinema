@@ -10,16 +10,16 @@
 
 There are 2 docker compose config files
 **docker-compose.local.yml** - Use image with local MySQL installation
-**docker-compose.local.yml** - Use image with external MySQL server
+**docker-compose.yml** - Use image with external MySQL server
 
 1. Clone The Project
 2. Replace ENV Values in **.env** file
-3. Run `docker compose -f docker-compose.yml pull`
-4. Run `docker compose -f docker-compose.yml build --pull`
-5. Run `docker compose -f docker-compose.yml up -d`
-6. Install Composer Deps. Run `docker compose -f docker-compose.yml run --rm cinema_test_php composer install`
-7. Run Migrations. `docker compose -f docker-compose.yml run --rm cinema_test_php php artisan migrate`
-8. Run Seeders. `docker compose -f docker-compose.yml run --rm cinema_test_php php artisan db:seed`
+3. Run `docker compose -f docker-compose.local.yml pull`
+4. Run `docker compose -f docker-compose.local.yml build --pull`
+5. Run `docker compose -f docker-compose.local.yml up -d`
+6. Install Composer Deps. Run `docker compose -f docker-compose.local.yml run --rm cinema_test_php composer install`
+7. Run Migrations. `docker compose -f docker-compose.local.yml run --rm cinema_test_php php artisan migrate`
+8. Run Seeders. `docker compose -f docker-compose.local.yml run --rm cinema_test_php php artisan db:seed`
 
 ## Environment Variables
 

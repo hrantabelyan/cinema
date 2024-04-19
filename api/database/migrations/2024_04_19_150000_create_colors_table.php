@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('movies', function (Blueprint $table) {
-            $table->id();
-            $table->uuid('uuid')->unique();
-            $table->string('name');
-            $table->string('image_path');
-            $table->unsignedSmallInteger('duration')->comment('in minutes');
+        Schema::create('colors', function (Blueprint $table) {
+            $table->tinyIncrements('id');
+            $table->string('slug');
+            $table->string('title');
             $table->dateTime('deleted_at')->nullable();
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('movies');
+        Schema::dropIfExists('colors');
     }
 };
