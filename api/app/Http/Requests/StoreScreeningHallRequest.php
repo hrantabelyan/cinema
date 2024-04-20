@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Validation\Rule;
 
-class StoreCinemaHallRequest extends ApiRequest
+class StoreScreeningRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,26 +22,19 @@ class StoreCinemaHallRequest extends ApiRequest
     public function rules(): array
     {
         return [
-            'name' => [
+            'cinema_hall_id' => [
                 'required',
                 'string',
-                'min:3',
-                'max:255',
+                Rule::exists('cinema_halls', 'uuid'),
             ],
-            'color' => [
+            'movie_id' => [
                 'required',
                 'string',
-                Rule::exists('colors', 'slug'),
+                Rule::exists('movies', 'uuid'),
             ],
-            'number_of_rows' => [
+            'start_at' => [
                 'required',
-                'min:1',
-                'max:255',
-            ],
-            'number_of_columns' => [
-                'required',
-                'min:1',
-                'max:255',
+                'date_format:Y-m-d H:i:s',
             ],
         ];
     }

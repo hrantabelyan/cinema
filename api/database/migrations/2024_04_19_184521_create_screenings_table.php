@@ -21,6 +21,8 @@ return new class extends Migration
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
 
+            $table->unique(['cinema_hall_id', 'start_at']);
+
             $table->foreign('cinema_hall_id')->references('id')->on('cinema_halls')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('movie_id')->references('id')->on('movies')->onDelete('cascade')->onUpdate('cascade');
         });

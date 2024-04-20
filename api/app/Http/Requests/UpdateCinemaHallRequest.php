@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\CountryCode;
-use App\Rules\Timezone;
 use Illuminate\Validation\Rule;
 
 class UpdateCinemaHallRequest extends ApiRequest
@@ -24,30 +22,19 @@ class UpdateCinemaHallRequest extends ApiRequest
     public function rules(): array
     {
         return [
-            'name' => [
-                'sometimes',
+            'cinema_hall_id' => [
                 'required',
                 'string',
-                'min:3',
-                'max:255',
+                Rule::exists('cinema_halls', 'uuid'),
             ],
-            'color' => [
-                'sometimes',
+            'movie_id' => [
                 'required',
                 'string',
-                Rule::exists('colors', 'slug'),
+                Rule::exists('movies', 'uuid'),
             ],
-            'number_of_rows' => [
-                'sometimes',
+            'start_at' => [
                 'required',
-                'min:1',
-                'max:255',
-            ],
-            'number_of_columns' => [
-                'sometimes',
-                'required',
-                'min:1',
-                'max:255',
+                'date_format:Y-m-d H:i:s',
             ],
         ];
     }
