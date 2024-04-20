@@ -23,7 +23,7 @@ class Screening extends Model
     ];
 
     protected $casts = [
-        'start_time' => 'datetime',
+        'start_at' => 'datetime',
         'deleted_at' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
