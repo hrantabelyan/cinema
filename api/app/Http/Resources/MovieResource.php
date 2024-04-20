@@ -17,7 +17,7 @@ class MovieResource extends JsonResource
         return [
             'id' => $this->uuid,
             'name' => $this->name,
-            'image_path' => url('storage/public/movies/' . $this->image_path),
+            'image_path' => url('storage/movies/' . $this->image_path),
             'duration' => $this->duration,
             'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
