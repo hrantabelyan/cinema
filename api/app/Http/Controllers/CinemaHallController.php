@@ -62,18 +62,6 @@ class CinemaHallController extends Controller
         }
 
         try {
-            foreach ($request->phone_numbers as $phoneNumber) {
-                $cinemaHall->numbers()->create([
-                    'number' => $phoneNumber,
-                ]);
-            }
-        } catch (\Throwable $e) {
-            DB::rollBack();
-            logger($e);
-            return $this->respondError(__('Could not add the phone number'));
-        }
-
-        try {
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollBack();
