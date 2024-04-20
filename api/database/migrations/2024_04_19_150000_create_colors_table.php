@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('colors', function (Blueprint $table) {
             $table->tinyIncrements('id');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('title');
             $table->dateTime('deleted_at')->nullable();
             $table->dateTime('created_at');
