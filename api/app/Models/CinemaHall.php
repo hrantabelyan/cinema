@@ -16,6 +16,7 @@ class CinemaHall extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'uuid',
         'name',
         'color_id',
         'number_of_rows',

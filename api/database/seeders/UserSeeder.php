@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             User::create($adminUser);
         }
 
-        if (app()->environment('local')) {
+        if (app()->environment('local') && User::count() < 20) {
             User::factory()->count(20)->create();
         }
     }

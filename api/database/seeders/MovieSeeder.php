@@ -13,7 +13,7 @@ class MovieSeeder extends Seeder
      */
     public function run(): void
     {
-        if (app()->environment('local')) {
+        if (app()->environment('local') && Movie::count() < 20) {
             Movie::factory()->count(20)->create();
         }
     }

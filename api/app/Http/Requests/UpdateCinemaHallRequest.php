@@ -25,15 +25,29 @@ class UpdateCinemaHallRequest extends ApiRequest
     {
         return [
             'name' => [
+                'sometimes',
                 'required',
                 'string',
                 'min:3',
                 'max:255',
             ],
-            'color_id' => [
+            'color' => [
+                'sometimes',
                 'required',
-                'integer',
-                // should exist in cinema_halls_colors table
+                'string',
+                Rule::exists('colors', 'slug'),
+            ],
+            'number_of_rows' => [
+                'sometimes',
+                'required',
+                'min:1',
+                'max:255',
+            ],
+            'number_of_columns' => [
+                'sometimes',
+                'required',
+                'min:1',
+                'max:255',
             ],
         ];
     }

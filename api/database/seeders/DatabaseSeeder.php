@@ -18,10 +18,7 @@ class DatabaseSeeder extends Seeder
             ColorSeeder::class,
             CinemaHallSeeder::class,
             MovieSeeder::class,
+            ScreeningSeeder::class,
         ]);
-
-        if (app()->environment() === 'local') {
-            // $this->call(CinemaHallSeeder::class);
-        }
     }
 }

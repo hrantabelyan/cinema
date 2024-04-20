@@ -30,18 +30,20 @@ class StoreCinemaHallRequest extends ApiRequest
                 'min:3',
                 'max:255',
             ],
-            'color_id' => [
+            'color' => [
                 'required',
-                'integer',
-                // should exist in cinema_halls_colors table
+                'string',
+                Rule::exists('colors', 'slug'),
             ],
-            'rows' => [
+            'number_of_rows' => [
                 'required',
-                'integer',
+                'min:1',
+                'max:255',
             ],
-            'seats_per_row' => [
+            'number_of_columns' => [
                 'required',
-                'integer',
+                'min:1',
+                'max:255',
             ],
         ];
     }

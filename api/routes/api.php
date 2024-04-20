@@ -18,5 +18,9 @@ use App\Http\Controllers\CinemaHallController;
 */
 
 // Route::middleware('auth:api')->group(function () {
-    Route::apiResource('cinema_halls', CinemaHallController::class);
+    Route::get('cinema_halls', [CinemaHallController::class, 'index']);
+    Route::post('cinema_halls', [CinemaHallController::class, 'store']);
+    Route::get('cinema_halls/{cinema_hall}', [CinemaHallController::class, 'show']);
+    Route::put('cinema_halls/{cinema_hall}', [CinemaHallController::class, 'update']);
+    Route::delete('cinema_halls/{cinema_hall}', [CinemaHallController::class, 'destroy']);
 // });

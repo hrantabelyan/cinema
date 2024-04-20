@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCinemaHallRequest;
 use App\Http\Resources\CinemaHallCollection;
 use App\Http\Resources\CinemaHallResource;
 use App\Models\CinemaHall;
+use App\Models\Color;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -33,8 +34,10 @@ class CinemaHallController extends Controller
         if (request()->has('search') && is_string(request()->input('search'))) {
             $searchTerm = request()->input('search');
             $cinemaHalls = $cinemaHalls->where(function($query) use ($searchTerm) {
-                $query->where('id', $searchTerm);
+                $query->where('uuid', $searchTerm);
                 $query->orWhere('name', 'LIKE', '%' . $searchTerm . '%');
+                $query->orWhere('number_of_rows', $searchTerm);
+                $query->orWhere('number_of_columns', $searchTerm);
             });
         }
 
@@ -49,24 +52,28 @@ class CinemaHallController extends Controller
      */
     public function store(StoreCinemaHallRequest $request)
     {
+        $color = Color::where('slug', $request->input('color'))->first();
+        if (!$color) {
+            return $this->respondError(__('Color not found'));
+        }
+
         DB::beginTransaction();
 
         try {
-            $cinemaHall = CinemaHall::create($request->only([
-                'name',
-            ]));
-        } catch (\Throwable $e) {
-            DB::rollBack();
-            logger($e);
-            return $this->respondError(__('Could not create the hall'));
-        }
-
-        try {
+            $cinemaHall = CinemaHall::create([
+                'uuid' => Str::uuid()->toString(),
+                'color_id' => $color->id,
+                ...$request->only([
+                    'name',
+                    'number_of_rows',
+                    'number_of_columns',
+                ]),
+            ]);
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollBack();
             logger($e);
-            return $this->respondError(__('Could not insert to database'));
+            return $this->respondError(__('Could not create the hall'));
         }
 
         return $this->respondCreated(new CinemaHallResource($cinemaHall));
