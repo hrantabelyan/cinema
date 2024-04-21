@@ -19,7 +19,7 @@ class Screening extends Model
         'uuid',
         'cinema_hall_id',
         'movie_id',
-        'start_time',
+        'start_at',
     ];
 
     protected $casts = [

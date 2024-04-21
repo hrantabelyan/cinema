@@ -62,8 +62,8 @@ class ScreeningController extends Controller
         }
 
         $screenings = new Screening();
-
         $screenings = $screenings->where('cinema_hall_id', $cinemaHall->id);
+        $screenings = $screenings->where('start_at', '>=', now());
 
         if (request()->has('search') && is_string(request()->input('search'))) {
             $searchTerm = request()->input('search');
@@ -89,15 +89,15 @@ class ScreeningController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Screening $cinemaHall)
+    public function show(Screening $screening)
     {
-        return $this->respondWithSuccess(new ScreeningResource($cinemaHall));
+        return $this->respondWithSuccess(new ScreeningResource($screening));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateScreeningRequest $request, Screening $cinemaHall)
+    public function update(UpdateScreeningRequest $request, Screening $screening)
     {
         // 
     }
@@ -105,12 +105,12 @@ class ScreeningController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Screening $cinemaHall)
+    public function destroy(Screening $screening)
     {
         try {
-            $cinemaHall->delete();
+            $screening->delete();
         } catch (\Throwable $e) {
-            return $this->respondError(__('Could not delete the hall, please try again later'));
+            return $this->respondError(__('Could not delete the screening, please try again later'));
         }
 
         return $this->respondOk();

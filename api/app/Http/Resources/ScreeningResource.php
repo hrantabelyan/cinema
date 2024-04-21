@@ -16,7 +16,7 @@ class ScreeningResource extends JsonResource
     {
         return [
             'id' => $this->uuid,
-            'cinema_hall_id' => $this->cinemaHall->id,
+            'cinema_hall_id' => $this->cinemaHall->uuid,
             'movie' => new MovieResource($this->movie),
             'start_at' => $this->start_at?->format('Y-m-d H:i:s'),
             'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),

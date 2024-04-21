@@ -18,11 +18,9 @@ class Reservation extends Model
         'uuid',
         'cinema_hall_id',
         'movie_id',
-        'start_time',
     ];
 
     protected $casts = [
-        'start_time' => 'datetime',
         'deleted_at' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
