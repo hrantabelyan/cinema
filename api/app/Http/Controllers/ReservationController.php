@@ -87,7 +87,12 @@ class ReservationController extends Controller
     {
         $user = User::where('email', $request->input('user_email'))->first();
         if (!$user) {
-            return $this->respondError(__('Screening not found'));
+            $user = User::create([
+                'uuid' => Str::uuid()->toString(),
+                'name' => '-',
+                'email' => $request->input('user_email'),
+                'password' => Str::password(16, true, true, false, false),
+            ]);
         }
         $screening = Screening::where('uuid', $request->input('screening_id'))->first();
         if (!$screening) {

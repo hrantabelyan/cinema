@@ -25,7 +25,7 @@ class StoreReservationRequest extends ApiRequest
             'user_email' => [
                 'required',
                 'string',
-                Rule::exists('users', 'email'),
+                'email:rfc,dns',
             ],
             'screening_id' => [
                 'required',
