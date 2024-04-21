@@ -22,10 +22,10 @@ class StoreReservationRequest extends ApiRequest
     public function rules(): array
     {
         return [
-            'user_id' => [
+            'user_email' => [
                 'required',
                 'string',
-                Rule::exists('users', 'uuid'),
+                Rule::exists('users', 'email'),
             ],
             'screening_id' => [
                 'required',

@@ -6,6 +6,8 @@ use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
 use App\Http\Resources\ReservationCollection;
 use App\Http\Resources\ReservationResource;
+use App\Http\Resources\CinemaHallResource;
+use App\Models\User;
 use App\Models\Reservation;
 use App\Models\Screening;
 use Illuminate\Support\Facades\DB;
@@ -49,7 +51,6 @@ class ReservationController extends Controller
      */
     public function screeningIndex(Screening $screening)
     {
-        $perPage = request()->has('per_page') ? (int) request()->input('per_page') : 10;
         $orderArray = ['id', 'desc'];
 
         if (request()->has('sort_by')) {
@@ -73,8 +74,10 @@ class ReservationController extends Controller
 
         $reservations = $reservations->orderBy($orderArray[0], $orderArray[1]);
         // logger($reservations->toSql(), $reservations->getBindings());
-        $reservations = $reservations->paginate($perPage);
-        return new ReservationCollection($reservations);
+        $reservations = $reservations->get();
+        return (new ReservationCollection($reservations))->additional([
+            'cinema_hall' => new CinemaHallResource($screening->cinemaHall),
+        ]);
     }
 
     /**
@@ -82,7 +85,11 @@ class ReservationController extends Controller
      */
     public function store(StoreReservationRequest $request)
     {
-        $screening = Screening::where('slug', $request->input('screening'))->first();
+        $user = User::where('email', $request->input('user_email'))->first();
+        if (!$user) {
+            return $this->respondError(__('Screening not found'));
+        }
+        $screening = Screening::where('uuid', $request->input('screening_id'))->first();
         if (!$screening) {
             return $this->respondError(__('Screening not found'));
         }
@@ -92,6 +99,7 @@ class ReservationController extends Controller
         try {
             $reservation = Reservation::create([
                 'uuid' => Str::uuid()->toString(),
+                'user_id' => $user->id,
                 'screening_id' => $screening->id,
                 ...$request->only([
                     'row_number',

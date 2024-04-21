@@ -16,8 +16,10 @@ class Reservation extends Model
      */
     protected $fillable = [
         'uuid',
-        'cinema_hall_id',
-        'movie_id',
+        'user_id',
+        'screening_id',
+        'row_number',
+        'column_number',
     ];
 
     protected $casts = [

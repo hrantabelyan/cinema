@@ -16,7 +16,8 @@ class ReservationResource extends JsonResource
     {
         return [
             'id' => $this->uuid,
-            'screening_id' => $this->screening_id,
+            // 'user_id' => $this->user->uuid,
+            'screening' => new ScreeningResource($this->screening),
             'row_number' => $this->row_number,
             'column_number' => $this->column_number,
             'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),
